@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataAccessInterfaces\DataAccessInterfaces.csproj" />
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\DataDomain\DataDomain.csproj" />
     <ProjectReference Include="..\LogicLayerInterfaces\LogicLayerInterfaces.csproj" />
   </ItemGroup>

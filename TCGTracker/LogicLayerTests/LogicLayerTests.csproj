@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataAccessFakes\DataAccessFakes.csproj" />
     <ProjectReference Include="..\DataDomain\DataDomain.csproj" />
     <ProjectReference Include="..\LogicLayerInterfaces\LogicLayerInterfaces.csproj" />
     <ProjectReference Include="..\LogicLayer\LogicLayer.csproj" />

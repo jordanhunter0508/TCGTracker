@@ -1,12 +1,135 @@
-﻿<Window x:Class="Desktop.MainWindow"
+﻿<Window x:Class="Desktop.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Desktop"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TCG Track Admin Dektop" Height="600" Width="900" Loaded="Window_Loaded">
+
+    <!-- STYLES -->
+    <Window.Resources>
+
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="20 10"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+
+            <!-- Button States -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+
+                        <Border x:Name="ButtonBorder"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="4">
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <!-- Hover -->
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#BDBDBD"/>
+                            </Trigger>
+
+                            <!-- Clicked -->
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="ButtonBorder"
+                                Property="Background"
+                                Value="#8F8F8F"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- NAV BAR -->
+        <Border Grid.Column="0" Background="#E5E5E5"
+                BorderBrush="Black" BorderThickness="1">
+
+            <DockPanel>
+
+                <!-- Header -->
+                <Border DockPanel.Dock="Top" BorderBrush="Black" 
+                        BorderThickness="0,0,0,1"  Height="100">
+
+                    <TextBlock Text="TCG Tracker" FontSize="32" FontWeight="Normal"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+
+                <!-- Navigation Buttons -->
+                <StackPanel VerticalAlignment="Top" Margin="0 10 0 0">
+
+                    <Button Content="Attributes"
+                            Style="{StaticResource NavButtonStyle}"/>
+
+                    <Button Content="Card Types"
+                            Style="{StaticResource NavButtonStyle}"/>
+
+                    <Button Content="Characters"
+                            Style="{StaticResource NavButtonStyle}"/>
+
+                    <Button Content="Effect Types"
+                            Style="{StaticResource NavButtonStyle}"/>
+
+                    <Button Content="Elements"
+                            Style="{StaticResource NavButtonStyle}"/>
+
+                    <Button Content="Games"
+                            Style="{StaticResource NavButtonStyle}"/>
+
+                    <Button Content="Keywords"
+                            Style="{StaticResource NavButtonStyle}"/>
+
+                    <Button Content="Users"
+                            Style="{StaticResource NavButtonStyle}"/>
+
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- Main Content Frame -->
+        <Frame x:Name="frmMain" Background="#F3F3F3" Grid.Row="0" Grid.Column="1"
+               NavigationUIVisibility="Hidden"/>
+
+        <!-- Status Bar to display notes to the user-->
+        <StatusBar Grid.Row="1" Grid.ColumnSpan="2" Padding="10,0">
+
+            <StatusBarItem HorizontalAlignment="Stretch">
+                <TextBlock Text="{Binding StatusMessage}" VerticalAlignment="Center"/>
+            </StatusBarItem>
+            
+            <StatusBarItem Width="60" HorizontalAlignment="Right">
+                <ContentControl>
+                    <Button x:Name="btnLogOut" Content="Log out" VerticalAlignment="Center" Padding="5 0"
+                            Visibility="{Binding LogOutButtonVisibility}"
+                            Command="{Binding LogOutButtonCommand}"/>
+                </ContentControl>
+            </StatusBarItem>
+        </StatusBar>
     </Grid>
 </Window>
