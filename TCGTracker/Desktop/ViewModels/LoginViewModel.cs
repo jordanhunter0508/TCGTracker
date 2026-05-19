@@ -118,7 +118,7 @@ namespace Desktop.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException?.Message);
             }
         }
 

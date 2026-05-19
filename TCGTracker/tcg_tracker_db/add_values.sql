@@ -45,3 +45,11 @@ VALUES
 	('General',10003),
 	('General',10004)
 GO
+
+print '*** adding to Game Table ***'
+INSERT INTO [dbo].[Game]
+	([Name],[Publisher],[OfficialWebsite])
+VALUES
+	('Pokemon TCG','The Pokemon Company','https://www.pokemon.com/us/pokemon-tcg'),
+	('One Piece TCG','Bandai','https://en.onepiece-cardgame.com/')
+GO

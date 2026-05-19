@@ -24,6 +24,8 @@ namespace Desktop.ViewModels
 
         // Commands
         public ICommand LogOutButtonCommand { get; }
+        public ICommand AttributePageCommand { get; }
+        public ICommand GamePageCommand { get; }
 
         /// <summary>
         /// Updates the status bar on the bottom of the window
@@ -92,7 +94,6 @@ namespace Desktop.ViewModels
             }
         }
 
-
         /// <summary>
         /// Initalize AccessToken to null by default to update the StatusBar
         /// </summary>
@@ -100,9 +101,12 @@ namespace Desktop.ViewModels
         {
             AccessToken = null;
             LogOutButtonCommand = new RelayCommand(LogOut);
+
+            // Nav bar commands
+            AttributePageCommand = new RelayCommand(LoadAttributePage);
+            GamePageCommand = new RelayCommand(LoadGamePage);
         }
 
-        
         /// <summary>
         /// Changes the AccessToken to null and returns then to the login page
         /// </summary>
@@ -110,6 +114,30 @@ namespace Desktop.ViewModels
         {
             AccessToken = null;
             NavigateRequested?.Invoke(new LoginPage());
+        }
+
+        /// <summary>
+        /// Checks if the user is signed in if
+        /// they are then they can navigate to the attribute list page
+        /// </summary>
+        public void LoadAttributePage()
+        {
+            if (AccessToken != null)
+            {
+                NavigateRequested?.Invoke(new UnderConstructionPage());
+            }
+        }
+
+        /// <summary>
+        /// Checks if the user is signed in if
+        /// they are then they can navigate to the game list page
+        /// </summary>
+        public void LoadGamePage()
+        {
+            if (AccessToken != null)
+            {
+                NavigateRequested?.Invoke(new GameListPage());
+            }
         }
     }
 }

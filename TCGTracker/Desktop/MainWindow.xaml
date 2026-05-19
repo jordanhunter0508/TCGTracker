@@ -85,7 +85,8 @@
                 <StackPanel VerticalAlignment="Top" Margin="0 10 0 0">
 
                     <Button Content="Attributes"
-                            Style="{StaticResource NavButtonStyle}"/>
+                            Style="{StaticResource NavButtonStyle}"
+                            Command="{Binding AttributePageCommand}"/>
 
                     <Button Content="Card Types"
                             Style="{StaticResource NavButtonStyle}"/>
@@ -100,7 +101,8 @@
                             Style="{StaticResource NavButtonStyle}"/>
 
                     <Button Content="Games"
-                            Style="{StaticResource NavButtonStyle}"/>
+                            Style="{StaticResource NavButtonStyle}"
+                            Command="{Binding GamePageCommand}"/>
 
                     <Button Content="Keywords"
                             Style="{StaticResource NavButtonStyle}"/>

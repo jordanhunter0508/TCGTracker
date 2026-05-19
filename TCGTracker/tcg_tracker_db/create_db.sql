@@ -1,4 +1,4 @@
-print '' print'*** dropping the database tcg_tracker_db ***'
+print'' print'*** dropping the database tcg_tracker_db ***'
 GO
 IF EXISTS(SELECT 1 FROM master.dbo.sysdatabases WHERE name = 'tcg_tracker_db')
 BEGIN
@@ -16,11 +16,11 @@ GO
 USE [tcg_tracker_db]
 GO
 
-PRINT '' PRINT '' PRINT 'Creating Tables in tcg_tracker_db'
+print '' print '' print 'Creating Tables in tcg_tracker_db'
 /*
 Used to store roles that a user could have
 */
-PRINT '*** creating Role Table ***'
+print '*** creating Role Table ***'
 GO
 CREATE TABLE [dbo].[Role]
 (
@@ -39,7 +39,7 @@ Could make a have image field so a user can select one of a few options
 the options could be stored in a different table to make it easier for an admin to add profile pictures
 DONT'T LET ALL USERS ADD PROFILE PICTURES
 */
-PRINT '*** creating Users Table ***'
+print '*** creating Users Table ***'
 GO
 CREATE TABLE [dbo].[Users]
 (
@@ -59,16 +59,29 @@ GO
 Used so the roleId dose not directly appear in the users table
 this can also be used to assign more than one role to a user
 */
-PRINT '*** creating UserRole Table ***'
+print '*** creating UserRole Table ***'
 GO
 CREATE TABLE [dbo].[UserRole]
 (
-	[RoleID]		[nvarchar](50)		NOT NULL,
-	[UserID]		[int]				NOT NULL,
+	[RoleID]				[nvarchar](50)		NOT NULL,
+	[UserID]				[int]				NOT NULL,
 	
 	CONSTRAINT [pk_userrole_userroleid] PRIMARY KEY([UserID], [RoleID]),
 	CONSTRAINT [fk_userrole__roleid] FOREIGN KEY([RoleID]) REFERENCES [Role]([RoleID]),
 	CONSTRAINT [fk_userrole_userid] FOREIGN KEY ([UserID]) REFERENCES [Users]([UserID])
 
+)
+GO
+
+/**/
+print '*** creating Game Table ***'
+GO
+CREATE TABLE [dbo].[Game]
+(
+	[GameID]				[int]				NOT NULL	IDENTITY(1,1),
+	[Name]					[nvarchar](250)		NOT NULL,
+	[Publisher]				[nvarchar](100)		NOT NULL,
+	[OfficialWebsite]		[nvarchar](250)		NULL,
+	[Active]				[bit]				NOT NULL	DEFAULT 1
 )
 GO

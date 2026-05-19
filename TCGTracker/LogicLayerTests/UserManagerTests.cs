@@ -8,7 +8,7 @@ namespace LogicLayerTests;
 [TestClass]
 public class UserManagerTests
 {
-    IUserManager _userManager = null;
+    private IUserManager _userManager = null;
 
     [TestInitialize]
     public void TestSetup()

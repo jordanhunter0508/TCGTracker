@@ -51,3 +51,28 @@ AS
 GO
 
 print '*************** End User SPs ***************' 
+
+
+
+
+
+
+
+
+
+
+print '' print '*************** Start Game SPs ***************' 
+
+print '*** creating sp_select_all_games ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_all_games]
+AS
+	BEGIN
+		SELECT	[GameID],[Name],[Publisher],
+				[OfficialWebsite],[Active]
+		FROM	[Game];
+	END
+GO
+
+
+print '*************** End Game SPs ***************' 
