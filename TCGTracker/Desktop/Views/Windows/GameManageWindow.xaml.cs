@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using Desktop.ViewModels;
+
+namespace Desktop.Views.Windows
+{
+    /// <summary>
+    /// Interaction logic for GameManageWindow.xaml
+    /// </summary>
+    public partial class GameManageWindow : Window
+    {
+        public GameManageWindow()
+        {
+            InitializeComponent();
+            GameAddViewModel vm = new GameAddViewModel();
+
+            if (vm.CloseWindowAction == null)
+            {
+                vm.CloseWindowAction = new Action(this.Close);
+            }
+
+            DataContext = vm;
+        }
+    }
+}

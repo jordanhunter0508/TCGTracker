@@ -73,15 +73,17 @@ CREATE TABLE [dbo].[UserRole]
 )
 GO
 
-/**/
+/*Used to keep track of which games are currently being tracked*/
 print '*** creating Game Table ***'
 GO
 CREATE TABLE [dbo].[Game]
 (
 	[GameID]				[int]				NOT NULL	IDENTITY(1,1),
-	[Name]					[nvarchar](250)		NOT NULL,
+	[Name]					[nvarchar](100)		NOT NULL,
 	[Publisher]				[nvarchar](100)		NOT NULL,
 	[OfficialWebsite]		[nvarchar](250)		NULL,
-	[Active]				[bit]				NOT NULL	DEFAULT 1
+	[Active]				[bit]				NOT NULL	DEFAULT 1,
+	
+	CONSTRAINT [ak_game_name] UNIQUE ([Name])
 )
 GO

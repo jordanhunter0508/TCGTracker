@@ -14,8 +14,4 @@
     <ProjectReference Include="..\LogicLayer\LogicLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Windows\" />
-  </ItemGroup>
-
 </Project>

@@ -14,5 +14,12 @@ namespace DataAccessInterfaces
         /// </summary>
         /// <returns>Returns a list of all games from the database.</returns>
         public List<Game> SelectAllGames();
+
+        /// <summary>
+        /// Inserts a new game into the database then returns the new Id of the game.
+        /// </summary>
+        /// <param name="game">New Game to insert</param>
+        /// <returns>Returns the new ID of the inserted game</returns>
+        public int InsertGame(Game game);
     }
 }

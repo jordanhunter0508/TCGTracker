@@ -1,0 +1,69 @@
+﻿<Window x:Class="Desktop.Views.Windows.GameManageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Desktop.Views.Windows"
+        mc:Ignorable="d"
+        Title="{Binding WindowTitle}" Height="220" Width="320"
+        WindowStartupLocation="CenterOwner">
+    <Grid>
+        <StackPanel Margin="10">
+
+            <!-- Name -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="Name" Margin="3"/>
+                <TextBox Grid.Column="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" 
+                         Height="25" TextWrapping="NoWrap" VerticalContentAlignment="Center"/>
+            </Grid>
+
+            <!-- Publisher -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="Publisher" Margin="3"/>
+                <TextBox Grid.Column="1" Text="{Binding Publisher, UpdateSourceTrigger=PropertyChanged}" 
+                         Height="25" TextWrapping="NoWrap" VerticalContentAlignment="Center"/>
+            </Grid>
+
+            <!-- Official Website -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="110"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0" Content="Official Website" Margin="3"/>
+                <TextBox Grid.Column="1" Text="{Binding OfficialWebsite, UpdateSourceTrigger=PropertyChanged}" 
+                         Height="25" TextWrapping="NoWrap" VerticalContentAlignment="Center"/>
+            </Grid>
+
+            <!-- Error Message -->
+            <Grid Height="25" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding ErrorMessage}" Foreground="Red" Margin="0 3"/>
+            </Grid>
+
+            <!-- Buttons -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="1" Content="Save" Style="{StaticResource AddButton}"
+                        Command="{Binding SaveGameCommand}"/>
+                <Button Grid.Column="2" Content="Cancel" Style="{StaticResource CancelButton}"
+                        Command="{Binding CloseWindowCommand}"/>
+            </Grid>
+        </StackPanel>
+    </Grid>
+</Window>

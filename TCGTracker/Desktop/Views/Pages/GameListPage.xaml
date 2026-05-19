@@ -23,7 +23,8 @@
                         <TextBlock Text="Games" Style="{StaticResource DataGridHeader}"/>
 
                         <Button Grid.Column="1" Content="Add a Game"
-                                Style="{StaticResource AddButton}" VerticalAlignment="Center" />
+                                Style="{StaticResource AddButton}" VerticalAlignment="Center" 
+                                Command="{Binding AddGameCommand}"/>
                     </Grid>
                 
                     <!-- List of Games -->

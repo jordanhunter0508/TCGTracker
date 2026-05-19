@@ -74,5 +74,23 @@ AS
 	END
 GO
 
+print '*** creating sp_insert_game ***'
+GO
+CREATE PROCEDURE [dbo].[sp_insert_game]
+(
+	@Name					[nvarchar](100),
+	@Publisher				[nvarchar](100),
+	@OfficialWebsite		[nvarchar](250)
+)
+AS
+	BEGIN
+		INSERT INTO [dbo].[Game]
+		([Name],[Publisher],[OfficialWebsite])
+		VALUES
+		(@Name,@Publisher,@OfficialWebsite);
+		
+		SELECT SCOPE_IDENTITY();
+	END
+GO
 
 print '*************** End Game SPs ***************' 

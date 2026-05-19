@@ -69,9 +69,9 @@
             <Setter Property="CanUserReorderColumns" Value="False"/>
         </Style>
 
-        <!--#region Buttons-->
+        <!--#region Buttons -->
 
-        <!-- Add Button-->
+        <!-- Add Button -->
         <Style x:Key="AddButton"
                TargetType="Button">
 
@@ -128,7 +128,7 @@
 
         </Style>
 
-        <!-- Edit Button-->
+        <!-- Edit Button -->
         <Style x:Key="EditButtonDataGrid"
                TargetType="Button">
             <Setter Property="Content" Value="Edit"/>
@@ -165,7 +165,7 @@
 
         </Style>
 
-        <!-- Delete Button-->
+        <!-- Delete Button -->
         <Style x:Key="DeleteButtonDataGrid"
        TargetType="Button">
 
@@ -279,6 +279,40 @@
             </Setter>
         </Style>
 
+        <!-- Cancel Button -->
+        <Style x:Key="CancelButton"
+               TargetType="Button">
+            
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+
+            <Setter Property="Padding" Value="16 8"/>
+            <Setter Property="Margin" Value="10 0"/>
+
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+
+                        <Border Background="{TemplateBinding Background}"
+                        CornerRadius="6">
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Margin="{TemplateBinding Padding}" />
+
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
         <!--#endregion-->
 
     </Application.Resources>

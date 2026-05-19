@@ -80,8 +80,8 @@ namespace Desktop.ViewModels
             LogInCommand = new RelayCommand(LogIn, CanLogIn);
 
             //AUTO FILL LOG IN
-            Email = "john@mail.com";
-            Password = "newuser";
+            _email = "john@mail.com";
+            _password = "newuser";
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace Desktop.ViewModels
 
             try
             {
-                AccessToken = _userManager.LoginUser(Email, Password);
+                AccessToken = _userManager.LoginUser(_email, _password);
 
                 if (AccessToken != null && AccessToken.Roles.Contains("System_Admin"))
                 {
@@ -129,14 +129,12 @@ namespace Desktop.ViewModels
         private bool IsValid()
         {
             bool isValid = true;
-            if (string.IsNullOrWhiteSpace(Email))
+            if (string.IsNullOrWhiteSpace(_email))
             {
-                ErrorMessage = "Please enter an email.";
                 isValid = false;
             }
-            else if (string.IsNullOrWhiteSpace(Password))
+            else if (string.IsNullOrWhiteSpace(_password))
             {
-                ErrorMessage = "Please enter a password.";
                 isValid = false;
             }
 
@@ -150,11 +148,11 @@ namespace Desktop.ViewModels
         private bool CanLogIn()
         { 
             bool canLogIn = true; 
-            if (string.IsNullOrWhiteSpace(Email))
+            if (string.IsNullOrWhiteSpace(_email))
             {
                 canLogIn = false;
             }
-            else if (string.IsNullOrWhiteSpace(Password))
+            else if (string.IsNullOrWhiteSpace(_password))
             {
                 canLogIn = false;
             }

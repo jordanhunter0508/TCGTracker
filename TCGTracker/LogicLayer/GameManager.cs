@@ -49,5 +49,29 @@ namespace LogicLayer
 
             return results;
         }
+
+        /// <summary>
+        /// Implements from <see cref="IGameManager"/>
+        /// </summary>
+        public int AddGame(Game game)
+        {
+            if(game == null)
+            {
+                throw new ArgumentNullException("Cannot save information from a null game.");
+            }
+
+            int newID = 4;
+
+            try
+            {
+                newID = _gameAccessor.InsertGame(game);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Failed to add your game to the database.\nPlease verify there isn't a game with the same name.",ex);
+            }
+
+            return newID;
+        }
     }
 }
