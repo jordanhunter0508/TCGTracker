@@ -116,5 +116,24 @@ namespace LogicLayer
 
             return wasUpdated;
         }
+
+        /// <summary>
+        /// Implements from <see cref="IGameManager"/>
+        /// </summary>
+        public bool ActivateGame(int gameID, bool active)
+        {
+            bool result = true;
+
+            try
+            {
+                result = (1 == _gameAccessor.ActivateGame(gameID,active));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Failed to update a games active status.",ex);
+            }
+
+            return result;
+        }
     }
 }

@@ -128,4 +128,20 @@ AS
 	END
 GO
 
+print '*** creating sp_activate_game ***'
+GO
+CREATE PROCEDURE [dbo].[sp_activate_game]
+(
+	@GameID					[int],
+	@Active					[bit]
+)
+AS
+	BEGIN
+		UPDATE	[dbo].[Game]
+		SET		[Active] = @Active
+		WHERE	[GameID] = @GameID
+		RETURN	@@ROWCOUNT;
+	END
+GO
+
 print '*************** End Game SPs ***************' 

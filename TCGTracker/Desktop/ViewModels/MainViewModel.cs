@@ -110,7 +110,7 @@ namespace Desktop.ViewModels
         /// <summary>
         /// Changes the AccessToken to null and returns then to the login page
         /// </summary>
-        public void LogOut()
+        private void LogOut()
         {
             AccessToken = null;
             NavigateRequested?.Invoke(new LoginPage());
@@ -120,7 +120,7 @@ namespace Desktop.ViewModels
         /// Checks if the user is signed in if
         /// they are then they can navigate to the attribute list page
         /// </summary>
-        public void LoadAttributePage()
+        private void LoadAttributePage()
         {
             if (AccessToken != null)
             {
@@ -132,7 +132,7 @@ namespace Desktop.ViewModels
         /// Checks if the user is signed in if
         /// they are then they can navigate to the game list page
         /// </summary>
-        public void LoadGamePage()
+        private void LoadGamePage()
         {
             if (AccessToken != null)
             {

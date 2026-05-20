@@ -27,6 +27,8 @@ namespace Desktop.ViewModels
 
         public ICommand AddGameCommand { get; }
         public ICommand EditGameCommand { get; }
+        public ICommand ActivateGameCommand { get; }
+
 
         /// <summary>
         /// List of all games from the database
@@ -64,6 +66,7 @@ namespace Desktop.ViewModels
             // Commands
             AddGameCommand = new RelayCommand(DisplayAddGameWindow, () => !_isWindowOpen);
             EditGameCommand = new RelayCommand(DisplayEditGameWindow, () => !_isWindowOpen);
+            ActivateGameCommand = new RelayCommand(ActivateGame);
 
             LoadGames();
         }
@@ -130,6 +133,52 @@ namespace Desktop.ViewModels
             if (window.DataContext is GameAddViewModel vm && vm.WasSaved)
             {
                 LoadGames();
+            }
+        }
+
+        /// <summary>
+        /// Displays a confirmation window if the user says yes then tries to 
+        /// (de/re) activate the game
+        /// </summary>
+        private void ActivateGame()
+        {
+            if (SelectedGame == null)
+            {
+                return;
+            }
+
+            string message = SelectedGame.Active ? 
+                $"Are you sure you want to deactivate the game {SelectedGame.Name}." : 
+                $"Are you sure you want to reactivate the game {SelectedGame.Name}.";
+
+            string title = SelectedGame.Active ?
+                $"Confirm {SelectedGame.Name}'s Deactivation" :
+                $"Confirm {SelectedGame.Name}'s Reactivation";
+
+            MessageBoxResult confirmationWindow = MessageBox.Show(message,
+                                                                  title,
+                                                                  MessageBoxButton.YesNo,
+                                                                  MessageBoxImage.Warning);
+
+            if (confirmationWindow == MessageBoxResult.No)
+            {
+                return;
+            }
+
+            try
+            {
+                bool wasUpdated = _gameManager.ActivateGame(SelectedGame.GameID, !SelectedGame.Active);
+
+                if (wasUpdated)
+                {
+                    MessageBox.Show($"The game {SelectedGame.Name}'s activate status has been successfully updated.");
+                    LoadGames();
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

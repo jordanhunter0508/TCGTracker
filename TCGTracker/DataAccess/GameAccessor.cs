@@ -166,7 +166,40 @@ namespace DataAccess
                 throw ex;
             }
             finally
-            { 
+            {
+                conn.Close();
+            }
+
+            return rowCount;
+        }
+
+        /// <summary>
+        /// Implements from <see cref="IGameAccessor"/>. Access the database
+        /// using sp_activate_game
+        /// </summary>
+        public int ActivateGame(int gameID, bool active)
+        {
+            int rowCount = 0;
+
+            SqlConnection conn = DbConnection.GetConnection();
+            string cmdText = "sp_activate_game";
+            SqlCommand cmd = new SqlCommand(cmdText, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@GameID", gameID);
+            cmd.Parameters.AddWithValue("@Active", active);
+
+            try
+            {
+                conn.Open();
+                rowCount = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
                 conn.Close();
             }
 

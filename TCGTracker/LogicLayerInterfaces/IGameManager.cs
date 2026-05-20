@@ -43,5 +43,14 @@ namespace LogicLayerInterfaces
         /// Throws if there is an error connecting to the database or a foreign key violation.
         /// </exception>
         public bool EditGame(Game game);
+
+        /// <summary>
+        /// Updates the active status a game with a matching a gameID.
+        /// </summary>
+        /// <param name="gameID">Used to find the game that will be updated.</param>
+        /// <param name="active">New active status of the game.</param>
+        /// <returns>Returns true if only one row was affected false otherwise.</returns>
+        /// <exception cref="ApplicationException">Throws if there is an error connecting to the database.</exception>
+        public bool ActivateGame(int gameID, bool active);
     }
 }

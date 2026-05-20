@@ -52,7 +52,8 @@
                                         <StackPanel Orientation="Horizontal">
                                             <Button Style="{StaticResource EditButtonDataGrid}"
                                                     Command="{Binding DataContext.EditGameCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
-                                            <Button Style="{StaticResource ActivateButtonDataGrid}"/>
+                                            <Button Style="{StaticResource ActivateButtonDataGrid}"
+                                                    Command="{Binding DataContext.ActivateGameCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>

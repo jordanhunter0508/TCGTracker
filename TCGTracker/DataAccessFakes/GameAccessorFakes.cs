@@ -131,5 +131,24 @@ namespace DataAccessFakes
 
             return rowCount;
         }
+
+        /// <summary>
+        /// Implements from <see cref="IGameAccessor"/>. Used for tests
+        /// </summary>
+        public int ActivateGame(int gameID, bool active)
+        {
+            int rowCount = 0;
+
+            foreach (Game game in _games)
+            {
+                if (game.GameID == gameID)
+                {
+                    game.Active = active;
+                    rowCount++;
+                }
+            }
+
+            return rowCount;
+        }
     }
 }

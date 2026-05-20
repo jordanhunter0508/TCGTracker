@@ -35,5 +35,14 @@ namespace DataAccessInterfaces
         /// <param name="game">Updated version of the game</param>
         /// <returns>Returns number of rows affected</returns>
         public int UpdateGame(Game game);
+
+        /// <summary>
+        /// Updates the Active field for the game with a 
+        /// matching gameID to the active parameter.
+        /// </summary>
+        /// <param name="gameID">Used to find the game that will be updated.</param>
+        /// <param name="active">New active status of the game.</param>
+        /// <returns>Returns number of rows affected</returns>
+        public int ActivateGame(int gameID, bool active);
     }
 }

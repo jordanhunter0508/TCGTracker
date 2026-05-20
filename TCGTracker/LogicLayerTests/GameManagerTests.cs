@@ -240,4 +240,36 @@ public class GameManagerTests
         // assert
         // do nothing
     }
+
+    [TestMethod]
+    public void TestActivateGameReturnsTrueWithValidGameID()
+    { 
+        // arrange
+        const int gameID = 1;
+        const bool active = false;
+        const bool expected = true;
+        bool actual = false;
+
+        // act
+        actual = _gameManager.ActivateGame(gameID, active);
+
+        // assert
+        Assert.AreEqual(expected, actual);
+    }
+
+    [TestMethod]
+    public void TestActivateGameReturnsFalseWithInvalidGameID()
+    { 
+        // arrange
+        const int gameID = 999;
+        const bool active = false;
+        const bool expected = false;
+        bool actual = true;
+
+        // act
+        actual = _gameManager.ActivateGame(gameID, active);
+
+        // assert
+        Assert.AreEqual(expected, actual);
+    }
 }
