@@ -47,6 +47,16 @@ namespace DataAccessFakes
         /// <summary>
         /// Implements from <see cref="IGameAccessor"/>. Used for tests
         /// </summary>
+        public Game SelectGame(int gameID)
+        {
+            Game result = new Game();
+            result = _games.FirstOrDefault(g => g.GameID == gameID);
+            return result;
+        }
+
+        /// <summary>
+        /// Implements from <see cref="IGameAccessor"/>. Used for tests
+        /// </summary>
         public List<Game> SelectAllGames()
         {
             List<Game> results = new List<Game>();
@@ -82,6 +92,44 @@ namespace DataAccessFakes
             newID = _games.Count;
 
             return newID;
+        }
+
+        /// <summary>
+        /// Implements from <see cref="IGameAccessor"/>. Used for tests
+        /// </summary>
+        public int UpdateGame(Game game)
+        {
+            int rowCount = 0;
+
+            // Check to make sure invalid nulls don't make it through
+            if (string.IsNullOrWhiteSpace(game.Name))
+            {
+                throw new ArgumentException("The game can not have a null name.");
+            }
+            if (string.IsNullOrWhiteSpace(game.Publisher))
+            {
+                throw new ArgumentException("The game can not have a null publisher.");
+            }
+
+            // Check to make sure a unqiue field is not invalidated
+            bool containsName = _games.Where(g => g.Name.Equals(game.Name, StringComparison.OrdinalIgnoreCase)).Any();
+            if (containsName)
+            {
+                throw new Exception("A game with this name is already stored.");
+            }
+
+            foreach (Game oldGame in _games)
+            {
+                if (oldGame.GameID == game.GameID)
+                {
+                    oldGame.Name = game.Name;
+                    oldGame.Publisher = game.Publisher;
+                    oldGame.OfficialWebsite = game.OfficialWebsite;
+                    rowCount++;
+                }
+            }
+
+            return rowCount;
         }
     }
 }

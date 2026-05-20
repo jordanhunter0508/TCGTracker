@@ -17,6 +17,7 @@ namespace Desktop.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         private readonly IUserManager _userManager;
+        private readonly Window _owner = Application.Current.MainWindow;
 
         private string _email;
         private string _password;
@@ -118,7 +119,7 @@ namespace Desktop.ViewModels
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message + "\n\n" + ex.InnerException?.Message);
+                MessageBox.Show(_owner,ex.Message + "\n\n" + ex.InnerException?.Message);
             }
         }
 

@@ -7,8 +7,7 @@
 
 
         <!-- Data Grid Section Header -->
-        <Style x:Key="DataGridHeader"
-               TargetType="TextBlock">
+        <Style x:Key="DataGridHeader" TargetType="TextBlock">
 
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -19,8 +18,8 @@
         </Style>
 
         <!-- DataGrid Border for objects -->
-        <Style x:Key="BorderDataGrid"
-               TargetType="Border">
+        <Style x:Key="BorderDataGrid" TargetType="Border">
+            
             <Setter Property="Padding" Value="20"/>
             <Setter Property="Margin" Value="15"/>
             <Setter Property="CornerRadius" Value="10"/>
@@ -31,12 +30,13 @@
 
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="VerticalAlignment" Value="Top"/>
+            
         </Style>
 
         <!-- Center the Headers for DataGrids -->
         <Style TargetType="DataGridColumnHeader">
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
         </Style>
 
         <!-- Replaces the old Blue highlight when selecting a row -->
@@ -56,8 +56,8 @@
 
         </Style>
 
-        <Style x:Key="ListViewDataGrid"
-            TargetType="DataGrid">
+        <Style x:Key="ListViewDataGrid" TargetType="DataGrid">
+            
             <Setter Property="IsReadOnly" Value="True"/>
             <Setter Property="HorizontalScrollBarVisibility" Value="Disabled"/>
             <Setter Property="VerticalScrollBarVisibility" Value="Disabled"/>
@@ -67,13 +67,27 @@
             <Setter Property="CanUserResizeColumns" Value="False"/>
             <Setter Property="CanUserResizeRows" Value="False"/>
             <Setter Property="CanUserReorderColumns" Value="False"/>
+            
+        </Style>
+
+        <!-- Center Checkboxes for the DataGrid -->
+        <Style x:Key="CenteredCheckBox" TargetType="CheckBox">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Vertically Center TextBlocks for the DataGrid -->
+        <Style x:Key="CenteredTextBlock" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="3 0 0 0"/>
         </Style>
 
         <!--#region Buttons -->
 
         <!-- Add Button -->
-        <Style x:Key="AddButton"
-               TargetType="Button">
+        <Style x:Key="AddButton" TargetType="Button">
 
             <Setter Property="Background" Value="#4CAF50"/>
             <Setter Property="Foreground" Value="White"/>
@@ -129,8 +143,7 @@
         </Style>
 
         <!-- Edit Button -->
-        <Style x:Key="EditButtonDataGrid"
-               TargetType="Button">
+        <Style x:Key="EditButtonDataGrid" TargetType="Button">
             <Setter Property="Content" Value="Edit"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#1E88E5"/>
@@ -166,8 +179,7 @@
         </Style>
 
         <!-- Delete Button -->
-        <Style x:Key="DeleteButtonDataGrid"
-       TargetType="Button">
+        <Style x:Key="DeleteButtonDataGrid" TargetType="Button">
 
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="#E53935"/>
@@ -203,85 +215,97 @@
         </Style>
 
         <!-- Activate/Deactivate Button -->
-        <Style x:Key="ActivateButtonDataGrid" 
-               TargetType="Button">
+        <Style x:Key="ActivateButtonDataGrid" TargetType="Button">
 
+            <!-- Base Appearance -->
             <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Padding" Value="6 2"/>
-            <Setter Property="Margin" Value="5 2"/>
+            <Setter Property="Padding" Value="6,2"/>
+            <Setter Property="Margin" Value="5,2"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
 
+            <!-- Simple Template -->
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
 
-                        <Border Background="{TemplateBinding Background}">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
                         </Border>
-
-                        <ControlTemplate.Triggers>
-
-                            <!-- Active is True (Deactive) -->
-                            <DataTrigger Binding="{Binding Active}" Value="True">
-                                <Setter Property="Content" Value="Deactivate"/>
-                                <Setter Property="Foreground" Value="#E53935"/>
-                            </DataTrigger>
-
-                            <!-- Deactive Hover -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Active}" Value="True"/>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource TemplatedParent}}" Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Foreground" Value="#b71c1c"/>
-                            </MultiDataTrigger>
-
-                            <!-- Deactive Pressed -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Active}" Value="True"/>
-                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}}" Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Foreground" Value="#5c0e0e"/>
-                            </MultiDataTrigger>
-
-
-                            
-                            <!-- Active is False (Reactive) -->
-                            <DataTrigger Binding="{Binding Active}" Value="False">
-                                <Setter Property="Content" Value="Reactivate"/>
-                                <Setter Property="Foreground" Value="#4CAF50"/>
-                            </DataTrigger>
-
-                            <!-- Reactive Hover -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Active}" Value="False"/>
-                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource TemplatedParent}}" Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Foreground" Value="#45A049"/>
-                            </MultiDataTrigger>
-
-                            <!-- Reactive Pressed -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding Active}" Value="False"/>
-                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource TemplatedParent}}" Value="True"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="Foreground" Value="#388E3C"/>
-                            </MultiDataTrigger>
-                        </ControlTemplate.Triggers>
-                        
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
+            <!-- Triggers -->
+            <Style.Triggers>
+
+                <!-- ACTIVE = TRUE  (Deactivate) -->
+                <DataTrigger Binding="{Binding Active}" Value="True">
+                    <Setter Property="Content" Value="Deactivate"/>
+                    <Setter Property="Foreground" Value="#E53935"/>
+                    <Setter Property="Tag" Value="Deactivate"/>
+                </DataTrigger>
+
+                <!-- Hover -->
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="True"/>
+                        <Condition Property="Tag" Value="Deactivate"/>
+                    </MultiTrigger.Conditions>
+
+                    <Setter Property="Foreground" Value="#b71c1c"/>
+                </MultiTrigger>
+
+                <!-- Pressed -->
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsPressed" Value="True"/>
+                        <Condition Property="Tag" Value="Deactivate"/>
+                    </MultiTrigger.Conditions>
+
+                    <Setter Property="Foreground" Value="#5c0e0e"/>
+                </MultiTrigger>
+
+
+                <!-- ACTIVE = FALSE (Reactivate) -->
+                <DataTrigger Binding="{Binding Active}" Value="False">
+                    <Setter Property="Content" Value="Reactivate"/>
+                    <Setter Property="Foreground" Value="#4CAF50"/>
+                    <Setter Property="Tag" Value="Reactivate"/>
+                </DataTrigger>
+
+                <!-- Hover -->
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsMouseOver" Value="True"/>
+                        <Condition Property="Tag" Value="Reactivate"/>
+                    </MultiTrigger.Conditions>
+
+                    <Setter Property="Foreground" Value="#388E3C"/>
+                </MultiTrigger>
+
+                <!-- Pressed -->
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsPressed" Value="True"/>
+                        <Condition Property="Tag" Value="Reactivate"/>
+                    </MultiTrigger.Conditions>
+
+                    <Setter Property="Foreground" Value="#1c471e"/>
+                </MultiTrigger>
+
+            </Style.Triggers>
+
         </Style>
 
         <!-- Cancel Button -->
-        <Style x:Key="CancelButton"
-               TargetType="Button">
+        <Style x:Key="CancelButton" TargetType="Button">
             
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="FontWeight" Value="SemiBold"/>

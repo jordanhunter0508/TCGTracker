@@ -32,5 +32,18 @@ namespace Desktop.Views.Windows
 
             DataContext = vm;
         }
+
+        public GameManageWindow(int gameID)
+        {
+            InitializeComponent();
+            GameAddViewModel vm = new GameAddViewModel(gameID);
+
+            if (vm.CloseWindowAction == null)
+            {
+                vm.CloseWindowAction = new Action(this.Close);
+            }
+
+            DataContext = vm;
+        }
     }
 }

@@ -29,22 +29,29 @@
                 
                     <!-- List of Games -->
                     <DataGrid ItemsSource="{Binding Games}" AutoGenerateColumns="False"
-                              Style="{StaticResource ListViewDataGrid}">
+                              Style="{StaticResource ListViewDataGrid}" SelectedItem="{Binding SelectedGame}">
 
                         <DataGrid.Columns>
 
                             <!-- Game Related Columns -->
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
-                            <DataGridTextColumn Header="Publisher" Binding="{Binding Publisher}" Width="150"/>
-                            <DataGridTextColumn Header="Official Website" Binding="{Binding OfficialWebsite}" Width="2*"/>
-                            <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" Width="Auto"/>
+                            <DataGridTextColumn Header="Name" Width="*"
+                                                Binding="{Binding Name}" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                            
+                            <DataGridTextColumn Header="Publisher" Width="150"
+                                                Binding="{Binding Publisher}" ElementStyle="{StaticResource CenteredTextBlock}"/>
+                            
+                            <DataGridTextColumn Header="Official Website" Width="2*"
+                                                Binding="{Binding OfficialWebsite}" ElementStyle="{StaticResource CenteredTextBlock}"/>
+
+                            <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" ElementStyle="{StaticResource CenteredCheckBox}"/>
 
                             <!-- Action Buttons -->
                             <DataGridTemplateColumn Width="Auto" MinWidth="75">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Horizontal">
-                                            <Button Style="{StaticResource EditButtonDataGrid}"/>
+                                            <Button Style="{StaticResource EditButtonDataGrid}"
+                                                    Command="{Binding DataContext.EditGameCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"/>
                                             <Button Style="{StaticResource ActivateButtonDataGrid}"/>
                                         </StackPanel>
                                     </DataTemplate>

@@ -34,6 +34,25 @@ namespace LogicLayer
         /// <summary>
         /// Implements from <see cref="IGameManager"/>
         /// </summary>
+        public Game GetGame(int gameID)
+        {
+            Game result = null;
+
+            try
+            {
+                result = _gameAccessor.SelectGame(gameID);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Failed to find a game with the id {gameID}.",ex);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Implements from <see cref="IGameManager"/>
+        /// </summary>
         public List<Game> GetAllGames()
         {
             List<Game> results = new List<Game>();
@@ -72,6 +91,30 @@ namespace LogicLayer
             }
 
             return newID;
+        }
+
+        /// <summary>
+        /// Implements from <see cref="IGameManager"/>
+        /// </summary>
+        public bool EditGame(Game game)
+        {
+            bool wasUpdated = false;
+
+            if (game == null)
+            {
+                throw new ArgumentNullException("Cannot update a game's information from a null game.");
+            }
+
+            try
+            {
+                wasUpdated = (1 == _gameAccessor.UpdateGame(game));
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"Failed to update the game.\nPlease make sure there isn't a game with the same name.",ex);
+            }
+
+            return wasUpdated;
         }
     }
 }

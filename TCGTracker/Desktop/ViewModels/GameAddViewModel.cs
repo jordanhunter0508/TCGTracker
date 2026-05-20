@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -18,7 +18,11 @@ namespace Desktop.ViewModels
     public class GameAddViewModel : ViewModelBase
     {
         private readonly IGameManager _gameManager;
+        private readonly Window _owner = Application.Current.MainWindow;
 
+        private readonly int _gameID;
+
+        // Display backing fields
         private string _name;
         private string _publisher;
         private string _officialWebsite;
@@ -112,9 +116,24 @@ namespace Desktop.ViewModels
         }
 
         /// <summary>
+        /// Initalize the manager and the commands.
+        /// Calls Prefill to fill in the boxes to be edited
+        /// </summary>
+        public GameAddViewModel(int gameID)
+        {
+            _gameManager = new GameManager();
+            _gameID = gameID;
+
+            PrefillData();
+
+            SaveGameCommand = new RelayCommand(UpdateGame, CanSave);
+            CloseWindowCommand = new RelayCommand(CloseWindow);
+        }
+
+        /// <summary>
         /// Attempts to save the new game into the database
         /// </summary>
-        public void CreateGame()
+        private void CreateGame()
         {
             if (!IsValid())
             {
@@ -133,13 +152,51 @@ namespace Desktop.ViewModels
                 _gameManager.AddGame(game);
                 WasSaved = true;
 
-                MessageBox.Show($"The game {game.Name} was successfully  added.");
+                MessageBox.Show(_owner, $"The game {game.Name} was successfully added.");
 
                 CloseWindowAction();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(_owner, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Attempts to save the updated game into the database
+        /// </summary>
+        private void UpdateGame()
+        {
+            if (!IsValid())
+            {
+                return;
+            }
+
+            try
+            {
+                Game game = new Game()
+                {
+                    GameID = _gameID,
+                    Name = _name.Trim(),
+                    Publisher = _publisher.Trim(),
+                    OfficialWebsite = _officialWebsite?.Trim(),
+                };
+
+                bool wasUpdated = _gameManager.EditGame(game);
+                if (wasUpdated)
+                {
+                    WasSaved = true;
+                    MessageBox.Show(_owner, $"The game {game.Name} was successfully updated.");
+                    CloseWindowAction();
+                }
+                else
+                {
+                    MessageBox.Show(_owner, $"The game {game.Name} could not be updated.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(_owner, ex.Message);
             }
         }
 
@@ -147,7 +204,7 @@ namespace Desktop.ViewModels
         /// Validates the user input
         /// </summary>
         /// <returns>Returns false if any of the input fields aren't valid, true otherwise</returns>
-        public bool IsValid()
+        private bool IsValid()
         {
             bool isValid = true;
 
@@ -183,7 +240,7 @@ namespace Desktop.ViewModels
         /// Makes sure the input fields are fillout.
         /// </summary>
         /// <returns>Returns true by default, if any input fields are empty return false.</returns>
-        public bool CanSave()
+        private bool CanSave()
         {
             bool canSave = true;
 
@@ -202,11 +259,32 @@ namespace Desktop.ViewModels
         /// <summary>
         /// Closes the current window
         /// </summary>
-        public void CloseWindow()
+        private void CloseWindow()
         {
             if (CloseWindowAction != null)
             {
                 CloseWindowAction();
+            }
+        }
+
+        /// <summary>
+        /// Gets the game from the gameID and prefills the textboxes.
+        /// Also sets the title for the window
+        /// </summary>
+        /// <param name="gameID">Id of the game to prefill</param>
+        private void PrefillData() 
+        {
+            try
+            {
+                Game game = _gameManager.GetGame(_gameID);
+                Name = game.Name;
+                Publisher = game.Publisher;
+                OfficialWebsite = game.OfficialWebsite;
+                _windowTitle = $"Edit Game {game.Name}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(_owner, ex.Message);
             }
         }
     }

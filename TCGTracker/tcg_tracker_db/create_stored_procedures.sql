@@ -63,6 +63,21 @@ print '*************** End User SPs ***************'
 
 print '' print '*************** Start Game SPs ***************' 
 
+print '*** creating sp_select_game ***'
+GO
+CREATE PROCEDURE [dbo].[sp_select_game]
+(
+	@GameID					[int]
+)
+AS
+	BEGIN
+		SELECT	[GameID],[Name],[Publisher],
+				[OfficialWebsite],[Active]
+		FROM	[Game]
+		WHERE	[GameID] = @GameID;
+	END
+GO
+
 print '*** creating sp_select_all_games ***'
 GO
 CREATE PROCEDURE [dbo].[sp_select_all_games]
@@ -90,6 +105,26 @@ AS
 		(@Name,@Publisher,@OfficialWebsite);
 		
 		SELECT SCOPE_IDENTITY();
+	END
+GO
+
+print '*** creating sp_update_game ***'
+GO
+CREATE PROCEDURE [dbo].[sp_update_game]
+(
+	@GameID					[int],				
+	@Name					[nvarchar](100),
+	@Publisher				[nvarchar](100),
+	@OfficialWebsite		[nvarchar](250)
+)
+AS
+	BEGIN
+		UPDATE	[dbo].[Game]
+		SET		[Name] = @Name,
+				[Publisher] = @Publisher,
+				[OfficialWebsite] = @OfficialWebsite
+		WHERE	[GameID] = @GameID
+		RETURN	@@ROWCOUNT;
 	END
 GO
 

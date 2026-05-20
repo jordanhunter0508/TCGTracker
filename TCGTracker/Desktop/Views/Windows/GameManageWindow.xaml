@@ -60,7 +60,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Button Grid.Column="1" Content="Save" Style="{StaticResource AddButton}"
-                        Command="{Binding SaveGameCommand}"/>
+                        Command="{Binding SaveGameCommand}" IsDefault="True"/>
                 <Button Grid.Column="2" Content="Cancel" Style="{StaticResource CancelButton}"
                         Command="{Binding CloseWindowCommand}"/>
             </Grid>
