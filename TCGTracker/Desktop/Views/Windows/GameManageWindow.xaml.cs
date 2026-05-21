@@ -20,23 +20,9 @@ namespace Desktop.Views.Windows
     /// </summary>
     public partial class GameManageWindow : Window
     {
-        public GameManageWindow()
+        public GameManageWindow(GameAddViewModel vm)
         {
             InitializeComponent();
-            GameAddViewModel vm = new GameAddViewModel();
-
-            if (vm.CloseWindowAction == null)
-            {
-                vm.CloseWindowAction = new Action(this.Close);
-            }
-
-            DataContext = vm;
-        }
-
-        public GameManageWindow(int gameID)
-        {
-            InitializeComponent();
-            GameAddViewModel vm = new GameAddViewModel(gameID);
 
             if (vm.CloseWindowAction == null)
             {

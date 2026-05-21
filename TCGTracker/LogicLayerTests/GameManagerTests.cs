@@ -28,7 +28,7 @@ public class GameManagerTests
     {
         // arrange
         const int expectedCount = 3;
-        List<Game> actual;
+        IReadOnlyList<Game> actual;
 
         // act
         actual = _gameManager.GetAllGames();

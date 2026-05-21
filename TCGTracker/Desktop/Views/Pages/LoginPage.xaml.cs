@@ -35,12 +35,11 @@ namespace Desktop.Views.Pages
         /// Also sets up all requests
         /// </summary>
         /// <param name="userManager"></param>
-        public LoginPage()
+        public LoginPage(LoginViewModel vm)
         {
             InitializeComponent();
 
-            _userManager = new UserManager();
-            ViewModel = new LoginViewModel(_userManager);
+            ViewModel = vm;
 
             // Requests
             ViewModel.NavigateRequested += page => NavigateRequested?.Invoke(page);

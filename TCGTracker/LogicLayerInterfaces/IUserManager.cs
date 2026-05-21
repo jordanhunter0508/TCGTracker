@@ -39,14 +39,13 @@ namespace LogicLayerInterfaces
         public User GetUserByEmail(string email);
 
         /// <summary>
-        /// Passes parameters to <see href="SelectRoleByUserEmail(string)"/> then returns <br/>
-        /// a list of strings of the user roles.
+        /// Gets a list of strings of the user roles for a specific user.
         /// </summary>
         /// <param name="email">Used to search the database for a matching email</param>
         /// <returns>Returns a list of strings that are roles of a specific user</returns>
         /// <exception cref="ApplicationException">Throws if the email is not found in the database</exception>
         /// <exception cref="ArgumentException">Throws if the inputed email is null or whitespace</exception>
-        public List<string> GetRolesForUser(string email);
+        public IReadOnlyList<string> GetRolesForUser(string email);
 
         /// <summary>
         /// Converts the inputed password to a Sha256 string

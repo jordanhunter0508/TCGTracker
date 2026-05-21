@@ -95,7 +95,7 @@ namespace DataAccess
         /// Implements from <see cref="IUserAccessor"/>. Access the database
         /// using sp_select_role_by_email
         /// </summary>
-        public List<string> SelectRoleByUserEmail(string email)
+        public IReadOnlyList<string> SelectRoleByUserEmail(string email)
         {
             List<string> results = new List<string>();
 

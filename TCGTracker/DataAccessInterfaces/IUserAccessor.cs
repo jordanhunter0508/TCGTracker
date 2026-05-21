@@ -31,7 +31,7 @@ namespace DataAccessInterfaces
         /// Where the email parameter matches one stored in the database.
         /// </summary>
         /// <param name="email">Compared against the emails stored in the database</param>
-        /// <returns>Returns a list of strings that are roles of a specific user</returns>
-        public List<string> SelectRoleByUserEmail(string email);
+        /// <returns>Returns a read only list of strings that are roles of a specific user</returns>
+        public IReadOnlyList<string> SelectRoleByUserEmail(string email);
     }
 }

@@ -59,7 +59,7 @@ namespace DataAccess
         /// Implements from <see cref="IGameAccessor"/>. Access the database
         /// using sp_select_all_games
         /// </summary>
-        public List<Game> SelectAllGames()
+        public IReadOnlyList<Game> SelectAllGames()
         {
             List<Game> results = new List<Game>();
             SqlConnection conn = DbConnection.GetConnection();

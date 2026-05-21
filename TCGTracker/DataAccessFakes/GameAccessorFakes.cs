@@ -57,7 +57,7 @@ namespace DataAccessFakes
         /// <summary>
         /// Implements from <see cref="IGameAccessor"/>. Used for tests
         /// </summary>
-        public List<Game> SelectAllGames()
+        public IReadOnlyList<Game> SelectAllGames()
         {
             List<Game> results = new List<Game>();
             results = _games;

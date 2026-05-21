@@ -17,21 +17,28 @@ namespace Desktop.ViewModels
 {
     public class GameAddViewModel : ViewModelBase
     {
+        // Application
+        private readonly Window _owner;                     // Used to center windows that open from this screen
+
+        // Manager
         private readonly IGameManager _gameManager;
-        private readonly Window _owner = Application.Current.MainWindow;
 
-        private readonly int _gameID;
-
-        // Display backing fields
+        // Display backing properties
         private string _name;
         private string _publisher;
         private string _officialWebsite;
         private string _windowTitle;
         private string _errorMessage;
 
+        // Edit mode variables
+        private int _gameID;
+        private bool _isEditMode;
+
+        // Commands
         public ICommand SaveGameCommand { get; }
         public ICommand CloseWindowCommand { get; }
 
+        // Requests
         public Action CloseWindowAction { get; set; }
 
         /// <summary>
@@ -106,28 +113,63 @@ namespace Desktop.ViewModels
         /// Initalize the manager and the commands.
         /// Also sets the window title
         /// </summary>
-        public GameAddViewModel()
+        public GameAddViewModel(IGameManager gameManager)
         {
-            _gameManager = new GameManager();
-            _windowTitle = "Add a New Game";
+            // Application
+            _owner = Application.Current.MainWindow;
 
-            SaveGameCommand = new RelayCommand(CreateGame, CanSave);
+            // Manger
+            _gameManager = gameManager;
+
+            // Default values
+            _windowTitle = "Add a New Game";
+            _isEditMode = false;
+
+            // Command
+            SaveGameCommand = new RelayCommand(SaveGame, CanSave);
             CloseWindowCommand = new RelayCommand(CloseWindow);
         }
 
         /// <summary>
-        /// Initalize the manager and the commands.
-        /// Calls Prefill to fill in the boxes to be edited
+        /// Gets the game from the gameID and prefills the textboxes.
+        /// Also sets the title for the window
         /// </summary>
-        public GameAddViewModel(int gameID)
+        /// <param name="gameID">Id of the game to prefill</param>
+        public void LoadGame(int gameID)
         {
-            _gameManager = new GameManager();
-            _gameID = gameID;
+            try
+            {
+                _isEditMode = true;
+                _gameID = gameID;
 
-            PrefillData();
+                Game game = _gameManager.GetGame(_gameID);
 
-            SaveGameCommand = new RelayCommand(UpdateGame, CanSave);
-            CloseWindowCommand = new RelayCommand(CloseWindow);
+                Name = game.Name;
+                Publisher = game.Publisher;
+                OfficialWebsite = game.OfficialWebsite;
+
+                _windowTitle = $"Edit Game {game.Name}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(_owner, ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Depending on the edit mode it either 
+        /// saves a new game or updateds an existing one
+        /// </summary>
+        private void SaveGame()
+        {
+            if (_isEditMode)
+            {
+                UpdateGame();
+            }
+            else 
+            {
+                CreateGame();
+            }
         }
 
         /// <summary>
@@ -264,27 +306,6 @@ namespace Desktop.ViewModels
             if (CloseWindowAction != null)
             {
                 CloseWindowAction();
-            }
-        }
-
-        /// <summary>
-        /// Gets the game from the gameID and prefills the textboxes.
-        /// Also sets the title for the window
-        /// </summary>
-        /// <param name="gameID">Id of the game to prefill</param>
-        private void PrefillData() 
-        {
-            try
-            {
-                Game game = _gameManager.GetGame(_gameID);
-                Name = game.Name;
-                Publisher = game.Publisher;
-                OfficialWebsite = game.OfficialWebsite;
-                _windowTitle = $"Edit Game {game.Name}";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(_owner, ex.Message);
             }
         }
     }

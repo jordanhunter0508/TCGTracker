@@ -53,9 +53,9 @@ namespace LogicLayer
         /// <summary>
         /// Implements from <see cref="IGameManager"/>
         /// </summary>
-        public List<Game> GetAllGames()
+        public IReadOnlyList<Game> GetAllGames()
         {
-            List<Game> results = new List<Game>();
+            IReadOnlyList<Game> results = new List<Game>();
 
             try
             {

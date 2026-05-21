@@ -4,6 +4,7 @@ using System.Windows.Input;
 using DataDomain;
 using Desktop.Views.Pages;
 using LogicLayerInterfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Desktop.ViewModels
 {
@@ -13,19 +14,21 @@ namespace Desktop.ViewModels
     /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        // Application
+        private readonly IServiceProvider _appServices;     // Used to get DI for page navigation
 
-
+        // Display backing fields
         private UserVM _accessToken;
         private string _statusMessage;
         private bool _isSignedIn;
-
-        // Requests
-        public event Action<Page> NavigateRequested;
 
         // Commands
         public ICommand LogOutButtonCommand { get; }
         public ICommand AttributePageCommand { get; }
         public ICommand GamePageCommand { get; }
+
+        // Requests
+        public event Action<Page> NavigateRequested;
 
         /// <summary>
         /// Updates the status bar on the bottom of the window
@@ -99,7 +102,13 @@ namespace Desktop.ViewModels
         /// </summary>
         public MainViewModel()
         {
+            // Application
+            _appServices = ((App)Application.Current).Services;
+
+            // Default values
             AccessToken = null;
+
+            // Commands
             LogOutButtonCommand = new RelayCommand(LogOut);
 
             // Nav bar commands
@@ -113,7 +122,8 @@ namespace Desktop.ViewModels
         private void LogOut()
         {
             AccessToken = null;
-            NavigateRequested?.Invoke(new LoginPage());
+            LoginPage page = _appServices.GetRequiredService<LoginPage>();
+            NavigateRequested?.Invoke(page);
         }
 
         /// <summary>
@@ -136,7 +146,8 @@ namespace Desktop.ViewModels
         {
             if (AccessToken != null)
             {
-                NavigateRequested?.Invoke(new GameListPage());
+                GameListPage page = _appServices.GetRequiredService<GameListPage>();
+                NavigateRequested?.Invoke(page);
             }
         }
     }

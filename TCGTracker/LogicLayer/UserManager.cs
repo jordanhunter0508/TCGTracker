@@ -145,7 +145,7 @@ namespace LogicLayer
                         Surname = user.Surname,
                         Email = user.Email,
                         Active = user.Active,
-                        Roles = GetRolesForUser(email),
+                        Roles = GetRolesForUser(email).ToList(),
                     };
                 }
             }
@@ -159,14 +159,14 @@ namespace LogicLayer
         /// <summary>
         /// Implements from <see cref="IUserManager"/>
         /// </summary>
-        public List<string> GetRolesForUser(string email)
+        public IReadOnlyList<string> GetRolesForUser(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
                 throw new ArgumentException("Email was null or blank.");
             }
 
-            List<string> results = null;
+            IReadOnlyList<string> results = new List<string>();
 
             try
             {

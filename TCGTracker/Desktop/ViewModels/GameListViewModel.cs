@@ -12,19 +12,25 @@ using Desktop.Views;
 using Desktop.Views.Windows;
 using LogicLayer;
 using LogicLayerInterfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Desktop.ViewModels
 {
     public class GameListViewModel : ViewModelBase
     {
+        // Application
+        private readonly IServiceProvider _appServices;     // Used to get DI for window navigation
+        private readonly Window _owner;                     // Used to center windows that open from this screen
+
+        // Manager
         private readonly IGameManager _gameManager;
-        private readonly Window _owner = Application.Current.MainWindow;
 
-        private List<Game> _games = new List<Game>();
+        // Display backing properties
+        private IReadOnlyList<Game> _games = new List<Game>();
         private Game _selectedGame;
-
         private bool _isWindowOpen;                     // Used to "disable" the buttons to prevent multiple windows
 
+        // Commands
         public ICommand AddGameCommand { get; }
         public ICommand EditGameCommand { get; }
         public ICommand ActivateGameCommand { get; }
@@ -33,7 +39,7 @@ namespace Desktop.ViewModels
         /// <summary>
         /// List of all games from the database
         /// </summary>
-        public List<Game> Games
+        public IReadOnlyList<Game> Games
         {
             get => _games;
             set
@@ -59,9 +65,14 @@ namespace Desktop.ViewModels
         /// <summary>
         /// Initalize the Manager and the list
         /// </summary>
-        public GameListViewModel()
+        public GameListViewModel(IGameManager gameManager)
         {
-            _gameManager = new GameManager();
+            // Services
+            _appServices = ((App)Application.Current).Services;
+            _owner = Application.Current.MainWindow;
+
+            // Manager
+            _gameManager = gameManager;
 
             // Commands
             AddGameCommand = new RelayCommand(DisplayAddGameWindow, () => !_isWindowOpen);
@@ -93,7 +104,7 @@ namespace Desktop.ViewModels
         private void DisplayAddGameWindow()
         {
             _isWindowOpen = true;
-            GameManageWindow window = new GameManageWindow();
+            GameManageWindow window = _appServices.GetRequiredService<GameManageWindow>(); 
 
             // Set the owner then display the GameManageWindow
             window.Owner = _owner;
@@ -122,7 +133,12 @@ namespace Desktop.ViewModels
             _isWindowOpen = true;
             
             int gameID = SelectedGame.GameID;
-            GameManageWindow window = new GameManageWindow(gameID);
+            GameManageWindow window = _appServices.GetRequiredService<GameManageWindow>();
+
+            if (window.DataContext is GameAddViewModel vm)
+            {
+                vm.LoadGame(SelectedGame.GameID);
+            }
 
             window.Owner = _owner;
             window.ShowDialog();
@@ -130,7 +146,7 @@ namespace Desktop.ViewModels
             _isWindowOpen = false;
 
             // If an game was updated from the window reload the games
-            if (window.DataContext is GameAddViewModel vm && vm.WasSaved)
+            if (window.DataContext is GameAddViewModel vm2 && vm2.WasSaved)
             {
                 LoadGames();
             }
@@ -155,7 +171,8 @@ namespace Desktop.ViewModels
                 $"Confirm {SelectedGame.Name}'s Deactivation" :
                 $"Confirm {SelectedGame.Name}'s Reactivation";
 
-            MessageBoxResult confirmationWindow = MessageBox.Show(message,
+            MessageBoxResult confirmationWindow = MessageBox.Show(_owner,
+                                                                  message,
                                                                   title,
                                                                   MessageBoxButton.YesNo,
                                                                   MessageBoxImage.Warning);
@@ -168,12 +185,7 @@ namespace Desktop.ViewModels
             try
             {
                 bool wasUpdated = _gameManager.ActivateGame(SelectedGame.GameID, !SelectedGame.Active);
-
-                if (wasUpdated)
-                {
-                    MessageBox.Show($"The game {SelectedGame.Name}'s activate status has been successfully updated.");
-                    LoadGames();
-                }
+                LoadGames();
             }
             catch (Exception)
             {

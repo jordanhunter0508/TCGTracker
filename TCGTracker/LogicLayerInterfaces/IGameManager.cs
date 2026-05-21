@@ -20,9 +20,9 @@ namespace LogicLayerInterfaces
         /// <summary>
         /// Gets a list of all games from the database.
         /// </summary>
-        /// <returns>Returns a list of all games.</returns>
+        /// <returns>Returns a read only list of all games.</returns>
         /// <exception cref="ApplicationException">Throws if there is an error connecting to the database.</exception>
-        public List<Game> GetAllGames();
+        public IReadOnlyList<Game> GetAllGames();
 
         /// <summary>
         /// Add a new Game to the database.
@@ -39,9 +39,8 @@ namespace LogicLayerInterfaces
         /// </summary>
         /// <param name="game">Updated version of the game.</param>
         /// <returns>Returns true if only one row was affected.</returns>
-        /// <exception cref="ApplicationException">
-        /// Throws if there is an error connecting to the database or a foreign key violation.
-        /// </exception>
+        /// <exception cref="ApplicationException">Throws if there is an error connecting to the database or a foreign key violation.</exception>
+        /// <exception cref="ArgumentException">Throws if the inputed game is null.</exception>
         public bool EditGame(Game game);
 
         /// <summary>

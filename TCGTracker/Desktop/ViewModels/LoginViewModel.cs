@@ -11,18 +11,25 @@ using System.Windows.Input;
 using DataDomain;
 using Desktop.Views.Pages;
 using LogicLayerInterfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Desktop.ViewModels
 {
     public class LoginViewModel : ViewModelBase
     {
-        private readonly IUserManager _userManager;
-        private readonly Window _owner = Application.Current.MainWindow;
+        // Application
+        private readonly IServiceProvider _appServices;     // Used to get DI for window navigation
+        private readonly Window _owner;
 
+        // Manager
+        private readonly IUserManager _userManager;
+
+        // Display backing properties
         private string _email;
         private string _password;
         private string _errorMessage;
 
+        // User AccessToken
         public UserVM AccessToken { get; private set; }
         public event Action<UserVM> LoginSucceeded;
 
@@ -76,8 +83,14 @@ namespace Desktop.ViewModels
         /// </summary>
         public LoginViewModel(IUserManager userManager)
         {
+            // Application
+            _appServices = ((App)Application.Current).Services;
+            _owner = Application.Current.MainWindow;
+
+            // Manager
             _userManager = userManager;
 
+            // Command
             LogInCommand = new RelayCommand(LogIn, CanLogIn);
 
             //AUTO FILL LOG IN
@@ -104,7 +117,8 @@ namespace Desktop.ViewModels
                 if (AccessToken != null && AccessToken.Roles.Contains("System_Admin"))
                 {
                     LoginSucceeded?.Invoke(AccessToken);
-                    NavigateRequested?.Invoke(new UnderConstructionPage());
+                    UnderConstructionPage page = _appServices.GetRequiredService<UnderConstructionPage>();
+                    NavigateRequested?.Invoke(page);
                 }
                 else if (AccessToken != null && !AccessToken.Roles.Contains("System_Admin"))
                 {

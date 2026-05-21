@@ -11,8 +11,10 @@ using System.Windows.Shapes;
 using DataDomain;
 using Desktop.ViewModels;
 using Desktop.Views.Pages;
+using Desktop.Views.Windows;
 using LogicLayer;
 using LogicLayerInterfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Desktop.Views
 {
@@ -28,12 +30,11 @@ namespace Desktop.Views
         /// Initializes the page content then sets the
         /// DataContext to this pages ViewModel
         /// </summary>
-        public MainWindow()
+        public MainWindow(MainViewModel vm)
         {
             InitializeComponent();
 
-            _userManager = new UserManager();
-            _vm = new MainViewModel();
+            _vm = vm;
             _vm.NavigateRequested += NavigateToPage;
             DataContext = _vm;
         }
@@ -43,8 +44,9 @@ namespace Desktop.Views
         /// </summary>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var loginPage = new LoginPage();
-            NavigateToPage(loginPage);
+            LoginPage page = ((App)Application.Current).Services
+                                                .GetRequiredService<LoginPage>();
+            NavigateToPage(page);
         }
 
         /// <summary>

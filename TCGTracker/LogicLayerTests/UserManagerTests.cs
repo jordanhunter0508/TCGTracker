@@ -272,7 +272,7 @@ public class UserManagerTests
         const int expectedSize = 2;
         const string role1 = "testRole1";
         const string role2 = "testRole2";
-        List<string> actual;
+        IReadOnlyList<string> actual;
 
         // act
         actual = _userManager.GetRolesForUser(email);
@@ -289,7 +289,7 @@ public class UserManagerTests
         // arrange
         const string email = "testuser3@test.com";
         const int expectedSize = 0;
-        List<string> actual;
+        IReadOnlyList<string> actual;
 
         // act
         actual = _userManager.GetRolesForUser(email);
@@ -304,7 +304,7 @@ public class UserManagerTests
         // arrange
         const string email = "testloser1@test.com";
         const int expectedSize = 0;
-        List<string> actual;
+        IReadOnlyList<string> actual;
 
         // act
         actual = _userManager.GetRolesForUser(email);
@@ -320,7 +320,7 @@ public class UserManagerTests
         // arrange
         const string email = null;
         const int expectedSize = 0;
-        List<string> actual;
+        IReadOnlyList<string> actual;
 
         // act
         actual = _userManager.GetRolesForUser(email);
@@ -336,7 +336,7 @@ public class UserManagerTests
         // arrange
         const string email = "";
         const int expectedSize = 0;
-        List<string> actual;
+        IReadOnlyList<string> actual;
 
         // act
         actual = _userManager.GetRolesForUser(email);

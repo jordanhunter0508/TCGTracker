@@ -25,10 +25,10 @@ namespace Desktop.Views.Pages
         /// <summary>
         /// Creates a new ViewModel then adds it the DataContext.
         /// </summary>
-        public GameListPage()
+        public GameListPage(GameListViewModel vm)
         {
             InitializeComponent();
-            GameListViewModel vm = new GameListViewModel();
+
             DataContext = vm;
         }
     }

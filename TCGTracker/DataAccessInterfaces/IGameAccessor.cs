@@ -19,8 +19,8 @@ namespace DataAccessInterfaces
         /// <summary>
         /// Requests a list of all games from the database.
         /// </summary>
-        /// <returns>Returns a list of all games from the database.</returns>
-        public List<Game> SelectAllGames();
+        /// <returns>Returns a read only list of all games from the database.</returns>
+        public IReadOnlyList<Game> SelectAllGames();
 
         /// <summary>
         /// Inserts a new game into the database then returns the new Id of the game.

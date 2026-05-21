@@ -119,7 +119,7 @@ namespace DataAccessFakes
         /// <summary>
         /// Implements from <see cref="IUserAccessor"/>. Used for tests
         /// </summary>
-        public List<string> SelectRoleByUserEmail(string email)
+        public IReadOnlyList<string> SelectRoleByUserEmail(string email)
         {
             List<string> roles = new List<string>();
 
