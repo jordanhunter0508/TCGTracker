@@ -43,8 +43,15 @@
                             <DataGridTextColumn Header="Official Website" Width="2*"
                                                 Binding="{Binding OfficialWebsite}" ElementStyle="{StaticResource CenteredTextBlock}"/>
 
-                            <DataGridCheckBoxColumn Header="Active" Binding="{Binding Active}" ElementStyle="{StaticResource CenteredCheckBox}"/>
-
+                            <DataGridTemplateColumn Header="Active">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox IsChecked="{Binding Active}" Style="{StaticResource CenteredCheckBox}"
+                                                  IsHitTestVisible="False"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            
                             <!-- Action Buttons -->
                             <DataGridTemplateColumn Width="Auto" MinWidth="75">
                                 <DataGridTemplateColumn.CellTemplate>

@@ -117,7 +117,7 @@ namespace Desktop.ViewModels
                 if (AccessToken != null && AccessToken.Roles.Contains("System_Admin"))
                 {
                     LoginSucceeded?.Invoke(AccessToken);
-                    UnderConstructionPage page = _appServices.GetRequiredService<UnderConstructionPage>();
+                    var page = _appServices.GetRequiredService<GameListPage>();
                     NavigateRequested?.Invoke(page);
                 }
                 else if (AccessToken != null && !AccessToken.Roles.Contains("System_Admin"))
